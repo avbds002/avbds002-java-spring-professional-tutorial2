@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/products")
@@ -36,5 +35,11 @@ public class ProductController {
         productDTO = service.insert(productDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(productDTO.getId()).toUri();
         return ResponseEntity.created(uri).body(productDTO);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+        productDTO = service.update(id, productDTO);
+        return  ResponseEntity.ok(productDTO);
     }
 }
